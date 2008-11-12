@@ -1,0 +1,7 @@
+QUICK SETUP INSTRUCTIONS
+- copy easyopenid into your apps folder
+- move folder easyopenid/templates/easyopenid to your templates folder.
+- add 'easyopenid' to INSTALLED_APPS in settings.py
+- run ./manage.py syncdb
+- in your login/setup page put a include of the form {% include "easyopenid/providers.html" %} where you want the easyopenid form to appear.
+

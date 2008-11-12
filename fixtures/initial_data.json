@@ -1,0 +1,10 @@
+[{"pk": 1, "model": "easyopenid.openidprovider", "fields": {"icon": "http://www.blogger.com/favicon.ico", "name": "Blogger", "pattern": "http://<TEXTFIELD>.blogspot.com"}},
+ {"pk": 2, "model": "easyopenid.openidprovider", "fields": {"icon": "/site_media/openid_providers/aol.png", "name": "AOL", "pattern": "http://openid.aol.com/<TEXTFIELD>"}},
+ {"pk": 3, "model": "easyopenid.openidprovider", "fields": {"icon": "http://www.flickr.com/favicon.ico", "name": "Flickr", "pattern": "http://www.flickr.com/photos/<TEXTFIELD>"}},
+ {"pk": 4, "model": "easyopenid.openidprovider", "fields": {"icon": "http://www.livedoor.com/favicon.ico", "name": "LiveDoor", "pattern": "http://profile.livedoor.com/<TEXTFIELD>"}},
+ {"pk": 5, "model": "easyopenid.openidprovider", "fields": {"icon": "http://www.livejournal.com/favicon.ico", "name": "LiveJournal", "pattern": "http://<TEXTFIELD>.livejournal.com"}},
+ {"pk": 7, "model": "easyopenid.openidprovider", "fields": {"icon": "/site_media/openid_providers/smugmug.png", "name": "SmugMug", "pattern": "http://<TEXTFIELD>.smugmug.com"}},
+ {"pk": 8, "model": "easyopenid.openidprovider", "fields": {"icon": "http://www.technorati.com/favicon.ico", "name": "Technorati", "pattern": "http://technorati.com/people/technorati/<TEXTFIELD>"}},
+ {"pk": 9, "model": "easyopenid.openidprovider", "fields": {"icon": "/site_media/openid_providers/vox.png", "name": "Vox", "pattern": "http://<TEXTFIELD>.vox.com"}},
+ {"pk": 10, "model": "easyopenid.openidprovider", "fields": {"icon": "http://www.yahoo.com/favicon.ico", "name": "Yahoo", "pattern": "http://yahoo.com"}},
+ {"pk": 11, "model": "easyopenid.openidprovider", "fields": {"icon": "http://www.wordpress.com/favicon.ico", "name": "Wordpress", "pattern": "http://<TEXTFIELD>.wordpress.com"}}]

@@ -1,0 +1,103 @@
+{% load i18n %}
+        <fieldset>
+        <legend>{% trans "Login/Signup with OpenID:" %}</legend>
+        <div id="openid-providers">
+            <table width="100%" id="providers_table">
+                {% for provider in providers %}
+                    {% if forloop.counter0|divisibleby:"3" %}<tr>{% endif %}
+                    <td>
+                        <a href="#" id="provider-entry-{{provider.name}}" style="text-decoration: none"><img src="{{provider.icon}}" class="favicon" />{{ provider.name }}</a>
+                    </td>
+                    {% if forloop.counter0|add:"1"|divisibleby:"3" %}</tr>{% endif %}
+                {% endfor %}
+                {% if providers|length|divisibleby:"3" %}{% else %}</tr>{% endif %}
+            </table>
+            <p></p>
+            <a href="#" id="other-openid-provider"><img src="/site_media/openid-icon.png" />{% trans "Or click here to sign in with another OpenID provider" %}</a>
+        </div>
+        <form id="openid-login" class="login" action="{% url django_openidconsumer.views.begin %}" method="POST" style="display: none;">
+            <table>
+                <tr><td width="150px">
+                    <span id="openid-provider-icon"><img src="/site_media/openid-icon.png" /></span>
+                    <span id="openid-provider-label">{% trans "OpenID Identifier" %}</span>:</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                      <span id="openid-provider-pattern" class="alignCenter"></span>
+                    </td>
+                </tr>
+                <tr><td></td><td><input type="submit" value="{% trans "Log in &raquo;" %}" class="button" /></td></tr>
+            </table>
+        </form>
+        <a href="#" id="pick-another-openid-provider" style="display: none;">{% trans "Go back and pick another from the list." %}</a>
+        <p>What is OpenID?  <a href="http://openid.net/what/" target="_blank">Learn it now.</a></p>
+        </fieldset>
+
+{% block extra_body %}
+<script type="text/javascript">
+
+    function pattern_input_text(pattern) {
+       pre_index = pattern.indexOf('&lt;');
+       if (pre_index >= 0) {
+         post_index = pattern.indexOf('&gt;');
+         pre = pattern.substring(0,pre_index);
+         post = pattern.substring(post_index+4,pattern.length); 
+         result = pre + '<input class="openid" type="text" id="openid_url" name="openid_url" value="your id" />' + post + '<input type="hidden" id="hidden-pattern" value="'+pattern+'" />';
+         return result;
+       } else {
+         result = '<input class="openid" type="hidden" id="openid_url" name="openid_url" value="" />' + pattern + '<input type="hidden" id="hidden-pattern" value="'+pattern+'" />';
+         return result;
+       }
+    }
+
+    function compute_open_id(login,pattern) {
+       pre_index = pattern.indexOf('<');
+       if (pre_index >= 0) {
+         post_index = pattern.indexOf('>') + 1;
+         pre = pattern.substring(0,pre_index);
+         post = pattern.substring(post_index,pattern.length); 
+         result = pre + login + post;
+         return result;
+       } else {
+         return pattern;
+       }
+    }
+
+    $(document).ready(function() {
+        $("#openid-login").hide();
+        $("#pick-another-openid-provider").hide();
+        {% for provider in providers %}
+            $("#provider-entry-{{provider.name}}").click(function() {
+              $("#openid-provider-icon").html('<img src="{{ provider.icon }}" />');
+              $("#openid-provider-label").html("{{provider.name}} id");
+              $("#openid-provider-pattern").html(pattern_input_text('{{provider.pattern}}'));
+              $("#openid-login").show();
+              $("#openid-providers").hide();
+              $("#pick-another-openid-provider").show();
+            });
+        {% endfor %}
+
+        $("#other-openid-provider").click(function() {
+          $("#openid-provider-icon").html('<img src="/site_media/openid-icon.png" />');
+          $("#openid-provider-label").html("OpenID Identifier");
+          $("#openid-provider-pattern").html('<input class="openid" type="text" id="openid_url" name="openid_url" value="">');
+          $("#openid-login").show();
+          $("#openid-providers").hide();
+          $("#pick-another-openid-provider").show();
+        });
+
+        $("#pick-another-openid-provider").click(function() {
+            $("#openid-providers").show();
+            $("#pick-another-openid-provider").hide();
+            $("#openid-login").hide();
+        });
+
+        $("#openid-login").submit(function() {
+           //alert('openid=' + compute_open_id($('#openid_url').val(),$('#hidden-pattern').val()));
+           computed = compute_open_id($('#openid_url').val(),$('#hidden-pattern').val());
+           $("#openid-provider-pattern").html('<input class="openid" type="text" id="openid_url" name="openid_url" value="'+ computed +'">');
+           return true;
+        });
+    });
+</script>
+{% endblock %}
